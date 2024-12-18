@@ -14,6 +14,7 @@ const Landing = ({setWeatherData}) => {
     
     const getWeather=async (place)=>{
         try {
+            if (place) {
             const url=`https://api.openweathermap.org/data/2.5/weather?q=${place}&appid=8ac5c4d57ba6a4b3dfcf622700447b1e&units=metric`
             const res = await fetch(url)
             const data=await res.json()
@@ -25,8 +26,10 @@ const Landing = ({setWeatherData}) => {
                 location: data.name,
                 cloud: data.clouds.all,
                 description: data.weather[0].description
-
             })
+            } else {
+                alert('please fill the form !!')
+            }
         } catch (error) {
             console.log(error);
             
@@ -43,7 +46,7 @@ const Landing = ({setWeatherData}) => {
                 <p style={{fontFamily:'"Satisfy", serif'}} className='text-center text-light fs-5'>The Weather Update App provides real-time weather forecasts, live updates, and severe weather alerts, helping you stay prepared wherever you are. With accurate data and customizable notifications, it ensures you're always informed about the conditions around you.</p>
                 <div style={{width:'100%',height:'350px'}} className='d-flex align-items-center'>
                     {/* <Form> */}
-                        <Form.Control ref={inputRef}  className='form-control me-3' type="text" placeholder="Enter the country.." autoComplete='off' />
+                        <Form.Control ref={inputRef}  className='form-control me-3' type="text" placeholder="Enter the Place.." autoComplete='off' />
                         <Link to={'/weatherupdation'} className='btn btn-warning' type='submit' onClick={()=>getWeather(inputRef.current.value)}><i className="fa-solid fa-arrow-right"></i></Link>
                     {/* </Form> */}
                 </div>
